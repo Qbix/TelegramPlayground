@@ -20,12 +20,24 @@
 // Load composer
 require_once __DIR__ . '/vendor/autoload.php';
 
+use Longman\TelegramBot\TelegramLog;
+
 // Load all configuration options
 /** @var array $config */
 $config = require __DIR__ . '/config.php';
 
 try {
     $bot = new TelegramBot\TelegramBotManager\BotManager($config);
+
+    TelegramLog::initialize(
+        new Monolog\Logger('telegram_bot', [
+            (new Monolog\Handler\StreamHandler($config['logging']['debug'], Monolog\Logger::DEBUG))->setFormatter(new Monolog\Formatter\LineFormatter(null, null, true)),
+            (new Monolog\Handler\StreamHandler($config['logging']['error'], Monolog\Logger::ERROR))->setFormatter(new Monolog\Formatter\LineFormatter(null, null, true)),
+        ]),
+        new Monolog\Logger('telegram_bot_updates', [
+            (new Monolog\Handler\StreamHandler($config['logging']['update'], Monolog\Logger::INFO))->setFormatter(new Monolog\Formatter\LineFormatter('%message%' . PHP_EOL)),
+        ])
+    );
 
     // Run the bot!
     $bot->run();
