@@ -52,8 +52,9 @@ class CallbackqueryCommand extends SystemCommand
         // Callback query data can be fetched and handled accordingly.
         $callback_query = $this->getCallbackQuery();
         $callback_data = $callback_query->getData();
-
-        $gameUrl = 'https://' . $_SERVER['SERVER_NAME'] . '/public/index.html';
+        
+        $queryId = $callback_query->getId();
+        $gameUrl = 'https://' . $_SERVER['SERVER_NAME'] . '/public/index.html?id='.$queryId;
 
         return $callback_query->answer([
             'text' => $callback_data,
