@@ -2092,16 +2092,14 @@ var playerid = url.searchParams.get("id");
 
             this.highScore = ['10', '11', ''].concat(highScoreStr.split(''));
 
+            const pageBaseUrl = window.location.origin;
+
              // Submit highscore to Telegram
              var xmlhttp = new XMLHttpRequest();
-             var url = "https://qbix-bot-game.herokuapp.com/highscore/" + distance + 
-             // var url = "http://localhost:8082/highscore/" + distance + 
-                 "?id=" + playerid;
-             var sendingText = document.getElementById("sendingText");
-             sendingText.style.display = "block";
-
+             var url = pageBaseUrl + "/Commands/Custom/HighScoreHandler.php?distance=" + distance +
+                 "&id=" + playerid;
              xmlhttp.onreadystatechange = function() {
-                sendingText.style.display = "none";
+                 // show loader or notice hide/display
              };
              xmlhttp.open("GET", url, true);
              xmlhttp.send();
