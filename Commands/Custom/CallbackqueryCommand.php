@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * This file is part of the PHP Telegram Bot example-bot package.
  * https://github.com/php-telegram-bot/example-bot/
@@ -19,7 +20,6 @@
  */
 
 namespace Longman\TelegramBot\Commands\SystemCommands;
-
 use Longman\TelegramBot\Commands\SystemCommand;
 use Longman\TelegramBot\Entities\ServerResponse;
 
@@ -48,13 +48,16 @@ class CallbackqueryCommand extends SystemCommand
      */
     public function execute(): ServerResponse
     {
+        session_start();
 
         // Callback query data can be fetched and handled accordingly.
         $callback_query = $this->getCallbackQuery();
         $callback_data = $callback_query->getData();
-        
+
         $queryId = $callback_query->getId();
-        $gameUrl = 'https://' . $_SERVER['SERVER_NAME'] . '/public/index.html?id='.$queryId;
+        $_SESSION['qbix_'.$queryId] = $callback_query;
+
+        $gameUrl = 'https://' . $_SERVER['SERVER_NAME'] . '/public/index.php?id='.$queryId;
 
         return $callback_query->answer([
             'text' => $callback_data,
@@ -62,6 +65,5 @@ class CallbackqueryCommand extends SystemCommand
             'cache_time' => 5,
             'url' => $gameUrl
         ]);
-
     }
 }
