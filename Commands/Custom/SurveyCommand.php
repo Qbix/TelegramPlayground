@@ -109,78 +109,8 @@ class SurveyCommand extends UserCommand
         // Every time a step is achieved the state is updated
         switch ($state) {
             case 0:
-                if ($text === '') {
-                    $notes['state'] = 0;
-                    $this->conversation->update();
-
-                    $data['text'] = 'Type your name:';
-
-                    $result = Request::sendMessage($data);
-                    break;
-                }
-
-                $notes['name'] = $text;
-                $text          = '';
-
-            // No break!
-            case 1:
-                if ($text === '') {
-                    $notes['state'] = 1;
-                    $this->conversation->update();
-
-                    $data['text'] = 'Type your surname:';
-
-                    $result = Request::sendMessage($data);
-                    break;
-                }
-
-                $notes['surname'] = $text;
-                $text             = '';
-
-            // No break!
-            case 2:
-                if ($text === '' || !is_numeric($text)) {
-                    $notes['state'] = 2;
-                    $this->conversation->update();
-
-                    $data['text'] = 'Type your age:';
-                    if ($text !== '') {
-                        $data['text'] = 'Age must be a number';
-                    }
-
-                    $result = Request::sendMessage($data);
-                    break;
-                }
-
-                $notes['age'] = $text;
-                $text         = '';
-
-            // No break!
-            case 3:
-                if ($text === '' || !in_array($text, ['M', 'F'], true)) {
-                    $notes['state'] = 3;
-                    $this->conversation->update();
-
-                    $data['reply_markup'] = (new Keyboard(['M', 'F']))
-                        ->setResizeKeyboard(true)
-                        ->setOneTimeKeyboard(true)
-                        ->setSelective(true);
-
-                    $data['text'] = 'Select your gender:';
-                    if ($text !== '') {
-                        $data['text'] = 'Choose a keyboard option to select your gender';
-                    }
-
-                    $result = Request::sendMessage($data);
-                    break;
-                }
-
-                $notes['gender'] = $text;
-
-            // No break!
-            case 4:
                 if ($message->getLocation() === null) {
-                    $notes['state'] = 4;
+                    $notes['state'] = 0;
                     $this->conversation->update();
 
                     $data['reply_markup'] = (new Keyboard(
@@ -200,24 +130,10 @@ class SurveyCommand extends UserCommand
                 $notes['latitude']  = $message->getLocation()->getLatitude();
 
             // No break!
-            case 5:
-                if ($message->getPhoto() === null) {
-                    $notes['state'] = 5;
-                    $this->conversation->update();
+            case 1:
 
-                    $data['text'] = 'Insert your picture:';
-
-                    $result = Request::sendMessage($data);
-                    break;
-                }
-
-                $photo             = $message->getPhoto()[0];
-                $notes['photo_id'] = $photo->getFileId();
-
-            // No break!
-            case 6:
                 if ($message->getContact() === null) {
-                    $notes['state'] = 6;
+                    $notes['state'] = 1;
                     $this->conversation->update();
 
                     $data['reply_markup'] = (new Keyboard(
@@ -236,7 +152,7 @@ class SurveyCommand extends UserCommand
                 $notes['phone_number'] = $message->getContact()->getPhoneNumber();
 
             // No break!
-            case 7:
+            case 2:
                 $this->conversation->update();
                 $out_text = '/Survey result:' . PHP_EOL;
                 unset($notes['state']);
@@ -244,12 +160,11 @@ class SurveyCommand extends UserCommand
                     $out_text .= PHP_EOL . ucfirst($k) . ': ' . $v;
                 }
 
-                $data['photo']   = $notes['photo_id'];
-                $data['caption'] = $out_text;
+                $data['text'] = $out_text;
 
                 $this->conversation->stop();
 
-                $result = Request::sendPhoto($data);
+                $result = Request::sendMessage($data);
                 break;
         }
 
