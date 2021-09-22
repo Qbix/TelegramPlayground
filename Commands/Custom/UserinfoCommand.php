@@ -11,22 +11,22 @@ use Longman\TelegramBot\Request;
 use Longman\TelegramBot\Conversation;
 use Longman\TelegramBot\Entities\Keyboard;
 
-class TestCommand extends UserCommand
+class UserinfoCommand extends UserCommand
 {
     /**
      * @var string
      */
-    protected $name = 'test';                      // Your command's name
+    protected $name = 'userinfo';                      // Your command's name
 
     /**
      * @var string
      */
-    protected $description = 'A command for test'; // Your command description
+    protected $description = 'get the user info (profile-photo, username, user-id, first-name, last-name) '; // Your command description
 
     /**
      * @var string
      */
-    protected $usage = '/test';                    // Usage of your command
+    protected $usage = '/userinfo';                    // Usage of your command
 
     /**
      * @var string
