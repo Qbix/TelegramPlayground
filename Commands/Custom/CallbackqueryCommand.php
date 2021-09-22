@@ -48,16 +48,16 @@ class CallbackqueryCommand extends SystemCommand
      */
     public function execute(): ServerResponse
     {
-        session_start();
-
         // Callback query data can be fetched and handled accordingly.
         $callback_query = $this->getCallbackQuery();
         $callback_data = $callback_query->getData();
-
         $queryId = $callback_query->getId();
-        $_SESSION['qbix_'.$queryId] = $callback_query;
 
-        $gameUrl = 'https://' . $_SERVER['SERVER_NAME'] . '/public/index.php?id='.$queryId;
+        $user_id = $callback_query->getFrom()->getId();
+        $chat_id = $callback_query->getMessage()->getChat()->getId();
+        $message_id = $callback_query->getMessage()->getMessageId();
+
+        $gameUrl = 'https://' . $_SERVER['SERVER_NAME'] . '/public/index.php?id='.$queryId.'&user_id='.$user_id.'&chat_id='.$chat_id.'&message_id='.$message_id;
 
         return $callback_query->answer([
             'text' => $callback_data,
