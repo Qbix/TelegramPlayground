@@ -73,23 +73,20 @@ class GenericmessageCommand extends SystemCommand
         $chat_id = $message->getChat()->getId();
         $text = $message->getText();
 
-
         $result = Request::emptyResponse();
 
-        if($text !== 'game'){
-            return $result;
+        if($text === 'game'){
+            $result = Request::sendGame([
+                'chat_id' => $chat_id,
+                'game_short_name' => 'qbix_bot_game2', // change this game short name to as per your game short name
+                'reply_markup' => new InlineKeyboard([
+                    new InlineKeyboardButton([
+                        'text'=>"Play",
+                        'callback_game'=> 'Play qbix bot game'
+                    ])
+                ]),
+            ]);
         }
-
-        $result = Request::sendGame([
-            'chat_id' => $chat_id,
-            'game_short_name' => 'qbix_bot_game2', // change this game short name to as per your game short name
-            'reply_markup' => new InlineKeyboard([
-                new InlineKeyboardButton([
-                    'text'=>"Play",
-                    'callback_game'=> 'Play qbix bot game'
-                ])
-            ]),
-        ]);
 
         if ($result->isOk()) {
             return $result;
