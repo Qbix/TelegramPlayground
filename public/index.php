@@ -1,6 +1,4 @@
-<?php
-session_start();
-?>
+
 
 <!doctype html>
 <html>
@@ -14,7 +12,7 @@ session_start();
 </head>
 
 <body id="t" class="offline">
-<?php echo session_id(); echo '<br>'; echo ini_get('session.cookie_domain'); ?>
+
     <div id="main-frame-error" class="interstitial-wrapper">
         <div id="main-content">
             <div class="icon icon-offline" alt=""></div>
