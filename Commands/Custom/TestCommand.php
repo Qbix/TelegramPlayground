@@ -61,24 +61,13 @@ class TestCommand extends UserCommand
         $from       = $message->getFrom();
         $chat = $message->getChat();
         $user = $message->getFrom();
-        $text = trim($message->getText(true));
         $chat_id = $chat->getId();
         $user_id = $user->getId();
 
         // Preparing response
         $data = [
-            'chat_id' => $chat_id,
-            // Remove any keyboard by default
-            'reply_markup' => Keyboard::remove(['selective' => true]),
+            'chat_id' => $chat_id
         ];
-
-        if ($chat->isGroupChat() || $chat->isSuperGroup()) {
-            // Force reply is applied by default so it can work with privacy on
-            $data['reply_markup'] = Keyboard::forceReply(['selective' => true]);
-        }
-
-        // Conversation start
-        $this->conversation = new Conversation($user_id, $chat_id, $this->getName());
 
         // Make sure the Download path has been defined and exists
         $download_path = $this->telegram->getDownloadPath();
