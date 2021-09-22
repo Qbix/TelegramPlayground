@@ -2081,6 +2081,21 @@ var playerid = url.searchParams.get("id");
         },
 
         /**
+         * Get url parameters
+         * @param url
+         */
+        getUrlParams: function(url) {
+            var params = {};
+            (url + '?').split('?')[1].split('&').forEach(function(pair) {
+                pair = (pair + '=').split('=').map(decodeURIComponent);
+                if (pair[0].length) {
+                    params[pair[0]] = pair[1];
+                }
+            });
+            return params;
+        },
+
+        /**
          * Set the highscore as a array string.
          * Position of char in the sprite: H - 10, I - 11.
          * @param {number} distance Distance ran in pixels.
@@ -2089,15 +2104,20 @@ var playerid = url.searchParams.get("id");
             distance = this.getActualDistance(distance);
             var highScoreStr = (this.defaultString +
                 distance).substr(-this.maxScoreUnits);
-
             this.highScore = ['10', '11', ''].concat(highScoreStr.split(''));
-
             const pageBaseUrl = window.location.origin;
+            let urlParams = this.getUrlParams(window.location.search);
 
              // Submit highscore to Telegram
              var xmlhttp = new XMLHttpRequest();
-             var url = pageBaseUrl + "/Commands/Custom/HighScoreHandler.php?distance=" + distance +
-                 "&id=" + playerid;
+             var url = pageBaseUrl
+                 + "/Commands/Custom/HighScoreHandler.php?"
+                 + "distance=" + distance
+                 + "&id=" + playerid
+                 + "&user_id=" + urlParams.user_id
+                 + "&chat_id=" + urlParams.chat_id
+                 + "&message_id=" + urlParams.message_id
+             ;
              xmlhttp.onreadystatechange = function() {
                  // show loader or notice hide/display
              };
