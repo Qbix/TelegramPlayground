@@ -23,6 +23,8 @@ namespace Longman\TelegramBot\Commands\SystemCommands;
 use Longman\TelegramBot\Commands\SystemCommand;
 use Longman\TelegramBot\Conversation;
 use Longman\TelegramBot\Entities\ChatPermissions;
+use Longman\TelegramBot\Entities\InlineKeyboard;
+use Longman\TelegramBot\Entities\InlineKeyboardButton;
 use Longman\TelegramBot\Entities\ServerResponse;
 use Longman\TelegramBot\Exception\TelegramException;
 use Longman\TelegramBot\Request;
@@ -68,17 +70,16 @@ class GenericmessageCommand extends SystemCommand
      */
     public function execute(): ServerResponse
     {
-        $message = $this->getMessage();
+        $config = require __DIR__ . '/../../config.php';
+        $botUsername = $config['bot_username'];
 
+        $message = $this->getMessage();
+        $chat_id = $message->getChat()->getId();   // Get the current Chat ID
         $newChatMemeber = $message->getNewChatMembers();
 
         if ($newChatMemeber) {
-
-            $chat_id = $message->getChat()->getId();
             $user_id = $message->getFrom()->getId();
-
-
-            return Request::restrictChatMember(
+            Request::restrictChatMember(
                 array(
                     'chat_id' => $chat_id,
                     'user_id' => $user_id,
@@ -89,6 +90,21 @@ class GenericmessageCommand extends SystemCommand
                     )
                 )
             );
+
+            $result = Request::sendMessage([
+                'chat_id' => $chat_id,
+                'text' => 'Please click below button to open the chat', // change this game short name to as per your game short name
+                'reply_markup' => new InlineKeyboard([
+                    new InlineKeyboardButton([
+                        'text'=>"open chat",
+                        'url'=> 'https://t.me/'.$botUsername.'?start=123456789'
+                    ])
+                ]),
+            ]);
+
+            if ($result->isOk()) {
+                return $result;
+            }
         }
 
         return Request::emptyResponse();
