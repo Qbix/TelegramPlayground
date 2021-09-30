@@ -161,6 +161,12 @@ class SurveyCommand extends UserCommand
                 $notes['phone_number'] = $message->getContact()->getPhoneNumber();
 
             // No break!
+            case 3:
+                $notes['state'] = 3;
+                $this->conversation->update();
+                $this->telegram->executeCommand("userinfo");
+
+            // No break!
             case 2:
                 $this->conversation->update();
                 $out_text = '/Survey result:' . PHP_EOL;
