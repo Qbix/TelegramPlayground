@@ -70,15 +70,25 @@ class GenericmessageCommand extends SystemCommand
     {
         $message = $this->getMessage();
 
-        // If a conversation is busy, execute the conversation command after handling the message.
-        $conversation = new Conversation(
-            $message->getFrom()->getId(),
-            $message->getChat()->getId()
-        );
+        $newChatMemeber = $message->getNewChatMembers();
 
-        // Fetch conversation command if it exists and execute it.
-        if ($conversation->exists() && $command = $conversation->getCommand()) {
-            return $this->telegram->executeCommand($command);
+        if ($newChatMemeber) {
+
+            $chat_id = $message->getChat()->getId();
+            $user_id = $message->getFrom()->getId();
+
+
+            return Request::restrictChatMember(
+                array(
+                    'chat_id' => $chat_id,
+                    'user_id' => $user_id,
+                    'permissions' => json_encode(
+                        new ChatPermissions(
+                            array('can_send_messages' => false)
+                        )
+                    )
+                )
+            );
         }
 
         return Request::emptyResponse();
