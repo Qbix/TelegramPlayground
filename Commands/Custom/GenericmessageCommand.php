@@ -71,14 +71,16 @@ class GenericmessageCommand extends SystemCommand
     public function execute(): ServerResponse
     {
         $config = require __DIR__ . '/../../config.php';
-        $botUsername = $config['bot_username'];
+        $bot_username = $config['bot_username'];
+        $deep_link_code = $config['deep_link_code'];
 
         $message = $this->getMessage();
         $chat_id = $message->getChat()->getId();   // Get the current Chat ID
+        $user_id = $message->getFrom()->getId();
+
         $newChatMemeber = $message->getNewChatMembers();
 
         if ($newChatMemeber) {
-            $user_id = $message->getFrom()->getId();
             Request::restrictChatMember(
                 array(
                     'chat_id' => $chat_id,
@@ -96,14 +98,22 @@ class GenericmessageCommand extends SystemCommand
                 'text' => 'Please click below button to open the chat', // change this game short name to as per your game short name
                 'reply_markup' => new InlineKeyboard([
                     new InlineKeyboardButton([
-                        'text'=>"open chat",
-                        'url'=> 'https://t.me/'.$botUsername.'?start=123456789'
+                        'text' => "open chat",
+                        'url' => 'https://t.me/' . $bot_username . '?start=' . $deep_link_code
                     ])
                 ]),
             ]);
 
             if ($result->isOk()) {
                 return $result;
+            }
+        } else {
+            // If a conversation is busy, execute the conversation command after handling the message.
+            $conversation = new Conversation($user_id, $chat_id);
+
+            // Fetch conversation command if it exists and execute it.
+            if ($conversation->exists() && $command = $conversation->getCommand()) {
+                return $this->telegram->executeCommand($command);
             }
         }
 

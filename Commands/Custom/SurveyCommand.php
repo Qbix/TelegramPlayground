@@ -20,6 +20,9 @@ namespace Longman\TelegramBot\Commands\UserCommands;
 
 use Longman\TelegramBot\Commands\UserCommand;
 use Longman\TelegramBot\Conversation;
+use Longman\TelegramBot\Entities\ChatPermissions;
+use Longman\TelegramBot\Entities\InlineKeyboard;
+use Longman\TelegramBot\Entities\InlineKeyboardButton;
 use Longman\TelegramBot\Entities\Keyboard;
 use Longman\TelegramBot\Entities\KeyboardButton;
 use Longman\TelegramBot\Entities\ServerResponse;
@@ -73,17 +76,22 @@ class SurveyCommand extends UserCommand
      */
     public function execute(): ServerResponse
     {
+
+        $config = require __DIR__ . '/../../config.php';
+        $group_link = $config['group_link'];
+        $group_chat_id = $config['group_chat_id'];
+
         $message = $this->getMessage();
 
-        $chat    = $message->getChat();
-        $user    = $message->getFrom();
-        $text    = trim($message->getText(true));
+        $chat = $message->getChat();
+        $user = $message->getFrom();
+        $text = trim($message->getText(true));
         $chat_id = $chat->getId();
         $user_id = $user->getId();
 
         // Preparing response
         $data = [
-            'chat_id'      => $chat_id,
+            'chat_id' => $chat_id,
             // Remove any keyboard by default
             'reply_markup' => Keyboard::remove(['selective' => true]),
         ];
@@ -126,8 +134,9 @@ class SurveyCommand extends UserCommand
                     break;
                 }
 
+
                 $notes['longitude'] = $message->getLocation()->getLongitude();
-                $notes['latitude']  = $message->getLocation()->getLatitude();
+                $notes['latitude'] = $message->getLocation()->getLatitude();
 
             // No break!
             case 1:
@@ -155,6 +164,7 @@ class SurveyCommand extends UserCommand
             case 2:
                 $this->conversation->update();
                 $out_text = '/Survey result:' . PHP_EOL;
+                $longitude = $notes['longitude'];
                 unset($notes['state']);
                 foreach ($notes as $k => $v) {
                     $out_text .= PHP_EOL . ucfirst($k) . ': ' . $v;
@@ -164,7 +174,34 @@ class SurveyCommand extends UserCommand
 
                 $this->conversation->stop();
 
-                $result = Request::sendMessage($data);
+                $result = Request::emptyResponse();
+
+                if (!is_null($longitude)) {
+
+                    Request::restrictChatMember(
+                        array(
+                            'chat_id' => $group_chat_id,
+                            'user_id' => $user_id,
+                            'permissions' => json_encode(
+                                new ChatPermissions(
+                                    array('can_send_messages' => true)
+                                )
+                            )
+                        )
+                    );
+
+                    $result = Request::sendMessage([
+                        'chat_id' => $chat_id,
+                        'text' => 'Thanks for providing the info. You can participate in the group chat. Please click below button', // change this game short name to as per your game short name
+                        'reply_markup' => new InlineKeyboard([
+                            new InlineKeyboardButton([
+                                'text' => "open group",
+                                'url' => $group_link
+                            ])
+                        ]),
+                    ]);
+                }
+
                 break;
         }
 

@@ -27,6 +27,9 @@ return [
     // Add you bot's API key and name
     'api_key'      => 'your:bot_api_key',
     'bot_username' => 'username_bot', // Without "@"
+    'group_link' => 'https://t.me/joinchat/2r8BFQlzIoE5MDM1',
+    'group_chat_id' => -1001529587886,
+    'deep_link_code' => '12345678', // string
 
     // [Manager Only] Secret key required to access the webhook
     'secret'       => 'super_secret',

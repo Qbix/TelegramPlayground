@@ -61,12 +61,22 @@ class StartCommand extends SystemCommand
      */
     public function execute(): ServerResponse
     {
-        // If you use deep-linking, get the parameter like this:
-        // $deep_linking_parameter = $this->getMessage()->getText(true);
+        $config = require __DIR__ . '/../../config.php';
+        $deep_link_code = $config['deep_link_code'];
 
-        return $this->replyToChat(
-            'Hi there!' . PHP_EOL .
-            'Type /help to see all commands!'
-        );
+        // If you use deep-linking, get the parameter like this:
+        $deep_linking_parameter = $this->getMessage()->getText(true);
+
+
+        if ($deep_linking_parameter === $deep_link_code) {
+            return $this->telegram->executeCommand("survey");
+        } else {
+            return $this->replyToChat(
+                'Hi there!' . PHP_EOL .
+                'Type /help to see all commands!'
+            );
+        }
+
+
     }
 }
