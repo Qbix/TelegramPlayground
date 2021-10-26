@@ -38,12 +38,16 @@ class HtmlGameCommand extends UserCommand
      */
     public function execute(): ServerResponse
     {
+        $config = require __DIR__ . '/../../config.php';
+        $htmlgame_short_name = $config['game_short_name'];
+
+
         $message = $this->getMessage();            // Get Message object
         $chat_id = $message->getChat()->getId();   // Get the current Chat ID
 
         $result = Request::sendGame([
             'chat_id' => $chat_id,
-            'game_short_name' => 'qbix_bot_game2', // change this game short name to as per your game short name
+            'game_short_name' => $htmlgame_short_name, // change this game short name to as per your game short name
             'reply_markup' => new InlineKeyboard([
                 new InlineKeyboardButton([
                     'text'=>"Play",
