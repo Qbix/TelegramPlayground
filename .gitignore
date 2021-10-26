@@ -3,7 +3,6 @@ composer.lock
 config.php
 vendor
 .idea
-Download/*
 php-telegram-bot-debug.log
 php-telegram-bot-error.log
 php-telegram-bot-update.log
