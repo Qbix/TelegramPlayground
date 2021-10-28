@@ -51,6 +51,10 @@ class InlinequeryCommand extends SystemCommand
      */
     public function execute(): ServerResponse
     {
+
+        $config = require __DIR__ . '/../../config.php';
+        $htmlgame_short_name = $config['game_short_name'];
+
         $inline_query = $this->getInlineQuery();
         $query        = $inline_query->getQuery();
 
@@ -98,7 +102,7 @@ class InlinequeryCommand extends SystemCommand
             // https://core.telegram.org/bots/api#inlinequeryresultgame
             $results[] = new InlineQueryResultGame([
                 'id'                => '005',
-                'game_short_name'   => 'qbix_bot_game3'
+                'game_short_name'   => $htmlgame_short_name
             ]);
         }
 
