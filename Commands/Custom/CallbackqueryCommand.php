@@ -54,8 +54,15 @@ class CallbackqueryCommand extends SystemCommand
         $queryId = $callback_query->getId();
 
         $user_id = $callback_query->getFrom()->getId();
-        $chat_id = $callback_query->getMessage()->getChat()->getId();
-        $message_id = $callback_query->getMessage()->getMessageId();
+
+        $chat_id = null;
+        $message_id = null;
+
+        // https://github.com/php-telegram-bot/core/issues/1064#issuecomment-606851122 (How I can get chat_id from callback_query when callback_query is sent from InlineQueryResultArticle reply_markup? #1064)
+        if ($callback_query->getMessage()) {
+            $chat_id = $callback_query->getMessage()->getChat()->getId();
+            $message_id = $callback_query->getMessage()->getMessageId();
+        }
 
         $gameUrl = 'https://' . $_SERVER['SERVER_NAME'] . '/public/index.php?id='.$queryId.'&user_id='.$user_id.'&chat_id='.$chat_id.'&message_id='.$message_id;
 

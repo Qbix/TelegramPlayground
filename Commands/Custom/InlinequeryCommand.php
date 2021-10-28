@@ -21,6 +21,7 @@ namespace Longman\TelegramBot\Commands\SystemCommands;
 use Longman\TelegramBot\Commands\SystemCommand;
 use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultArticle;
 use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultContact;
+use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultGame;
 use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultLocation;
 use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultVenue;
 use Longman\TelegramBot\Entities\InputMessageContent\InputTextMessageContent;
@@ -92,6 +93,12 @@ class InlinequeryCommand extends SystemCommand
                 'address'   => 'In the middle of Nowhere',
                 'latitude'  => 33,
                 'longitude' => -33,
+            ]);
+
+            // https://core.telegram.org/bots/api#inlinequeryresultgame
+            $results[] = new InlineQueryResultGame([
+                'id'                => '005',
+                'game_short_name'   => 'qbix_bot_game3'
             ]);
         }
 
