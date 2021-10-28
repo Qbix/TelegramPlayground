@@ -25,6 +25,7 @@ namespace Longman\TelegramBot\Commands\SystemCommands;
 use Longman\TelegramBot\Commands\SystemCommand;
 use Longman\TelegramBot\Entities\ServerResponse;
 use Longman\TelegramBot\Exception\TelegramException;
+use Longman\TelegramBot\Request;
 
 class StartCommand extends SystemCommand
 {
@@ -67,8 +68,34 @@ class StartCommand extends SystemCommand
         // If you use deep-linking, get the parameter like this:
         $deep_linking_parameter = $this->getMessage()->getText(true);
 
+        $message = $this->getMessage();
+        $group_chat_id = $config['group_chat_id'];
+        $user_id = $message->getFrom()->getId();
 
-        if ($deep_linking_parameter === $deep_link_code) {
+        // check if channel admin
+        $member = Request::getChatMember([
+            'user_id' => $user_id,
+            'chat_id' => $group_chat_id
+        ]);
+
+        if ($member->isOk()) {
+            $member_data = $member->getResult();
+            if ($member_data->getStatus()) {
+                $status = $member_data->getStatus();
+            } else {
+                $status = '';
+            }
+        } else {
+            $status = '';
+        }
+
+        $isRestricted = false;
+
+        if ($status === 'restricted') {
+            $isRestricted = true;
+        }
+
+        if ($deep_linking_parameter === $deep_link_code && $isRestricted) {
             return $this->telegram->executeCommand("survey");
         } else {
             return $this->replyToChat(
@@ -76,7 +103,6 @@ class StartCommand extends SystemCommand
                 'Type /help to see all commands!'
             );
         }
-
 
     }
 }

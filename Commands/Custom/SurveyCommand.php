@@ -184,13 +184,16 @@ class SurveyCommand extends UserCommand
 
                 if (!is_null($longitude)) {
 
-                    Request::restrictChatMember(
+                    Request::promoteChatMember(
                         array(
                             'chat_id' => $group_chat_id,
                             'user_id' => $user_id,
                             'permissions' => json_encode(
                                 new ChatPermissions(
-                                    array('can_send_messages' => true)
+                                    array(
+                                        'can_send_messages' => true,
+                                        'status' => 'member'
+                                    )
                                 )
                             )
                         )
