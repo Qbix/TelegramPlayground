@@ -72,7 +72,7 @@ class StartCommand extends SystemCommand
         $group_chat_id = $config['group_chat_id'];
         $user_id = $message->getFrom()->getId();
 
-        // check if channel admin
+        // check if user is restricted in the group
         $member = Request::getChatMember([
             'user_id' => $user_id,
             'chat_id' => $group_chat_id
