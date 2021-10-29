@@ -336,3 +336,11 @@ CREATE TABLE IF NOT EXISTS `request_limiter` (
 
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+CREATE TABLE IF NOT EXISTS `welcome_group_chat` (
+  `id` bigint UNSIGNED COMMENT 'Update''s unique identifier',
+  `chat_id` bigint NULL DEFAULT NULL COMMENT 'Unique chat identifier',
+  `message_id` bigint UNSIGNED DEFAULT NULL COMMENT 'New outgoing message of any kind - text, photo, sticker, etc.',
+
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
