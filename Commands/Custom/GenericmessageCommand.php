@@ -20,6 +20,7 @@
 
 namespace Longman\TelegramBot\Commands\SystemCommands;
 
+use Longman\TelegramBot\DB;
 use Longman\TelegramBot\Commands\SystemCommand;
 use Longman\TelegramBot\Conversation;
 use Longman\TelegramBot\Entities\ChatPermissions;
@@ -93,6 +94,21 @@ class GenericmessageCommand extends SystemCommand
                 )
             );
 
+            $pdoObj = DB::getPdo();
+
+            $sqlQuery = "SELECT chat_id, message_id FROM welcome_group_chat";
+            $pdoSqlObj = $pdoObj->prepare($sqlQuery);
+            $pdoSqlObj->execute();
+            $resultWelcomeMessage = $pdoSqlObj->fetchAll();
+
+            foreach ($resultWelcomeMessage as $value) {
+                Request::deleteMessage(['chat_id' => $value['chat_id'], 'message_id' => $value['message_id']]);
+            }
+
+            $sqlQuery = "DELETE FROM welcome_group_chat";
+            $pdoSqlObj = $pdoObj->prepare($sqlQuery);
+            $pdoSqlObj->execute();
+
             $result = Request::sendMessage([
                 'chat_id' => $chat_id,
                 'text' => 'Please click below button to open the chat', // change this game short name to as per your game short name
@@ -103,6 +119,13 @@ class GenericmessageCommand extends SystemCommand
                     ])
                 ]),
             ]);
+
+            $message_id = $result->getResult()->getMessageId();
+            $chat_id = $result->getResult()->getChat()->getId();
+
+            $sqlQuery = "INSERT INTO welcome_group_chat (chat_id, message_id) VALUES (?,?)";
+            $pdoSqlObj = $pdoObj->prepare($sqlQuery);
+            $pdoSqlObj->execute([$chat_id, $message_id]);
 
             if ($result->isOk()) {
                 return $result;
