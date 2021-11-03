@@ -344,3 +344,13 @@ CREATE TABLE IF NOT EXISTS `welcome_group_chat` (
 
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+CREATE TABLE IF NOT EXISTS `game_score` (
+  `id` bigint UNSIGNED AUTO_INCREMENT COMMENT 'Unique identifier for this game_score',
+  `user_id` bigint COMMENT 'Unique user identifier',
+  `score` bigint COMMENT 'game score',
+
+  PRIMARY KEY (`id`),
+
+  FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
