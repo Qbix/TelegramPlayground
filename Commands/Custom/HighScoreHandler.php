@@ -4,6 +4,9 @@
 /** @var array $config */
 $config = require __DIR__ . '/../../config.php';
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+require_once 'HandleHighScore.php';
+
 if (
     isset($_GET['distance']) &&
     isset($_GET['id']) &&
@@ -25,7 +28,10 @@ if (
     $buffer = curl_exec($curl_handle);
     curl_close($curl_handle);
 
-    echo ($buffer) ? $buffer : "";
+    $hsObj = new HandleHighScore();
+    $gameUsers = $hsObj->handleGameScore($user_id, $highScore);
+
+    echo $gameUsers;
     return;
 }
 
