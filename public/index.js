@@ -1,6 +1,16 @@
 var url = new URL(location.href);
 var playerid = url.searchParams.get("id");
 
+const templates = {
+    userDisplay: `
+        <div class="profile">
+            <img src=":USER_PROFILE">
+            <h3>Name : :USER_NAME</h3>
+            <h3>Score : :USER_SCORE</h3>
+        </div>
+    `
+};
+
 // Copyright (c) 2014 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -2119,7 +2129,25 @@ var playerid = url.searchParams.get("id");
                  + "&message_id=" + urlParams.message_id
              ;
              xmlhttp.onreadystatechange = function() {
-                 // show loader or notice hide/display
+                 if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+                     var usersGameData = JSON.parse(xmlhttp.responseText);
+                     let htmlUserDisplayContent = '';
+                     let htmlData = '';
+
+                     usersGameData.forEach(function(item, index) {
+                         htmlData = templates.userDisplay;
+                         htmlData = htmlData
+                             .replace(':USER_PROFILE', 'assets/user-default.png')
+                             .replace(':USER_NAME', ((item.first_name === null) ? "" : item.first_name)+ ' ' + ((item.last_name === null) ? "" : item.last_name))
+                             .replace(':USER_SCORE', item.score)
+                         ;
+                         htmlUserDisplayContent += htmlData;
+                     });
+
+                     if (htmlUserDisplayContent !== '') {
+                         document.getElementsByClassName("profile_details")[0].innerHTML = htmlUserDisplayContent;
+                     }
+                 }
              };
              xmlhttp.open("GET", url, true);
              xmlhttp.send();

@@ -33,37 +33,8 @@
         </div>
 
     </div>
-            <div class="profile_details">
-                <div class="profile">
-                    <img src="assets/user-default.png">
-                    <h3>Name : ABCD</h3>
-                    <h3>Score : 5467</h3>
-                </div>
-                <div class="profile">
-                    <img src="assets/user-default.png">
-                    <h3>Name : ABCD</h3>
-                    <h3>Score : 5467</h3>
-                </div>
-                <div class="profile">
-                    <img src="assets/user-default.png">
-                    <h3>Name : ABCD</h3>
-                    <h3>Score : 5467</h3>
-                </div>
-                <div class="profile">
-                    <img src="assets/user-default.png">
-                    <h3>Name : ABCD</h3>
-                    <h3>Score : 5467</h3>
-                </div>
-                 <div class="profile">
-                    <img src="assets/user-default.png">
-                    <h3>Name : ABCD</h3>
-                    <h3>Score : 5467</h3>
-                </div>
-                 <div class="profile">
-                    <img src="assets/user-default.png">
-                    <h3>Name : ABCD</h3>
-                    <h3>Score : 5467</h3>
-                </div>
+        <div class="profile_details">
+
         </div>
 </body>
 
