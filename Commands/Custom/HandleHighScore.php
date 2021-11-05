@@ -29,7 +29,21 @@ class HandleHighScore
             $pdoSqlObj->execute([$highScore, $gameUserId]);
         }
 
-        $sqlQuery = "SELECT id, user_id, score FROM game_score ORDER BY score DESC";
+        $sqlQuery = "
+            SELECT
+              g.id,
+              g.user_id,
+              g.score,
+              u.first_name,
+              u.last_name
+            FROM
+              user AS u
+            INNER JOIN
+              game_score AS g ON u.id = g.user_id
+            ORDER BY
+              g.user_id DESC
+        ";
+
         $pdoSqlObj = $pdoObj->prepare($sqlQuery);
         $pdoSqlObj->execute([$user_id]);
         $gameUsers = $pdoSqlObj->fetchAll(PDO::FETCH_ASSOC);
