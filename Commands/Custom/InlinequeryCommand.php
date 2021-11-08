@@ -27,6 +27,7 @@ use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultLocation;
 use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultMpeg4Gif;
 use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultPhoto;
 use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultVenue;
+use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultVideo;
 use Longman\TelegramBot\Entities\InputMessageContent\InputTextMessageContent;
 use Longman\TelegramBot\Entities\ServerResponse;
 
@@ -114,8 +115,8 @@ class InlinequeryCommand extends SystemCommand
                 'type'   => 'gif',
                 'gif_url' => 'https://sample-videos.com/gif/3.gif',
                 'thumb_url' => 'https://sample-videos.com/gif/3.gif',
-                'title' => 'This is gif',
-                'caption' => 'This is gif caption',
+                'title' => 'This is a gif',
+                'caption' => 'This is a gif caption',
                 'gif_height' => 10
             ]);
 
@@ -125,8 +126,8 @@ class InlinequeryCommand extends SystemCommand
                 'type'   => 'mpeg4_gif',
                 'mpeg4_url' => 'https://www.easygifanimator.net/images/samples/video-to-gif-sample.gif',
                 'thumb_url' => 'https://www.easygifanimator.net/images/samples/video-to-gif-sample.gif',
-                'title' => 'This is animated gif',
-                'caption' => 'This is animated gif caption'
+                'title' => 'This is a animated gif',
+                'caption' => 'This is a animated gif caption'
             ]);
 
             // https://core.telegram.org/bots/api#inlinequeryresultphoto
@@ -135,8 +136,19 @@ class InlinequeryCommand extends SystemCommand
                 'type'   => 'photo',
                 'photo_url' => 'https://file-examples-com.github.io/uploads/2017/10/file_example_JPG_100kB.jpg',
                 'thumb_url' => 'https://file-examples-com.github.io/uploads/2017/10/file_example_JPG_100kB.jpg',
-                'title' => 'This is photo',
-                'caption' => 'This is photo caption'
+                'title' => 'This is a photo',
+                'caption' => 'This is a photo caption'
+            ]);
+
+            // https://core.telegram.org/bots/api#inlinequeryresultvideo
+            $results[] = new InlineQueryResultVideo([
+                'id'     => '009',
+                'type'   => 'video',
+                'video_url' => 'https://filesamples.com/samples/video/mp4/sample_640x360.mp4',
+                'mime_type' => 'video/mp4',
+                'thumb_url' => 'https://www.learningcontainer.com/wp-content/uploads/2020/07/Sample-JPEG-Image-File-Download-scaled.jpg',
+                'title' => 'This is a video',
+                'caption' => 'This is a video caption'
             ]);
 
 
