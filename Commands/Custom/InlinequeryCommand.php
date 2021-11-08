@@ -22,6 +22,7 @@ use Longman\TelegramBot\Commands\SystemCommand;
 use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultArticle;
 use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultContact;
 use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultGame;
+use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultGif;
 use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultLocation;
 use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultVenue;
 use Longman\TelegramBot\Entities\InputMessageContent\InputTextMessageContent;
@@ -104,6 +105,17 @@ class InlinequeryCommand extends SystemCommand
                 'id'                => '005',
                 'game_short_name'   => $htmlgame_short_name
             ]);
+
+            // https://core.telegram.org/bots/api#inlinequeryresultgif
+            $results[] = new InlineQueryResultGif([
+                'id'     => '006',
+                'type'   => 'gif',
+                'gif_url' => 'https://sample-videos.com/gif/3.gif',
+                'thumb_url' => 'https://sample-videos.com/gif/3.gif',
+                'title' => 'this is gif'
+            ]);
+
+
         }
 
         return $inline_query->answer($results);
