@@ -24,6 +24,7 @@ use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultContact;
 use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultGame;
 use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultGif;
 use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultLocation;
+use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultMpeg4Gif;
 use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultVenue;
 use Longman\TelegramBot\Entities\InputMessageContent\InputTextMessageContent;
 use Longman\TelegramBot\Entities\ServerResponse;
@@ -112,7 +113,19 @@ class InlinequeryCommand extends SystemCommand
                 'type'   => 'gif',
                 'gif_url' => 'https://sample-videos.com/gif/3.gif',
                 'thumb_url' => 'https://sample-videos.com/gif/3.gif',
-                'title' => 'this is gif'
+                'title' => 'This is gif',
+                'caption' => 'This is gif caption',
+                'gif_height' => 10
+            ]);
+
+            // https://core.telegram.org/bots/api#inlinequeryresultmpeg4gif
+            $results[] = new InlineQueryResultMpeg4Gif([
+                'id'     => '007',
+                'type'   => 'mpeg4_gif',
+                'mpeg4_url' => 'https://www.easygifanimator.net/images/samples/video-to-gif-sample.gif',
+                'thumb_url' => 'https://www.easygifanimator.net/images/samples/video-to-gif-sample.gif',
+                'title' => 'this is animated gif',
+                'caption' => 'This is animated gif caption'
             ]);
 
 
