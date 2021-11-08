@@ -25,6 +25,7 @@ use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultGame;
 use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultGif;
 use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultLocation;
 use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultMpeg4Gif;
+use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultPhoto;
 use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultVenue;
 use Longman\TelegramBot\Entities\InputMessageContent\InputTextMessageContent;
 use Longman\TelegramBot\Entities\ServerResponse;
@@ -124,8 +125,18 @@ class InlinequeryCommand extends SystemCommand
                 'type'   => 'mpeg4_gif',
                 'mpeg4_url' => 'https://www.easygifanimator.net/images/samples/video-to-gif-sample.gif',
                 'thumb_url' => 'https://www.easygifanimator.net/images/samples/video-to-gif-sample.gif',
-                'title' => 'this is animated gif',
+                'title' => 'This is animated gif',
                 'caption' => 'This is animated gif caption'
+            ]);
+
+            // https://core.telegram.org/bots/api#inlinequeryresultphoto
+            $results[] = new InlineQueryResultPhoto([
+                'id'     => '008',
+                'type'   => 'photo',
+                'photo_url' => 'https://file-examples-com.github.io/uploads/2017/10/file_example_JPG_100kB.jpg',
+                'thumb_url' => 'https://file-examples-com.github.io/uploads/2017/10/file_example_JPG_100kB.jpg',
+                'title' => 'This is photo',
+                'caption' => 'This is photo caption'
             ]);
 
 
