@@ -57,13 +57,16 @@ class VideoCommand extends UserCommand
      */
     public function execute(): ServerResponse
     {
+        $config = require __DIR__ . '/../../config.php';
+        $video_one_file_id = $config['video_one_file_id'];
+
         $message = $this->getMessage();
         $chat = $message->getChat();
         $chat_id = $chat->getId();
 
         $data = [
             'chat_id' => $chat_id,
-            'video' => 	'BAACAgUAAxkBAAEOl09hm7EvDxkEiWSBQh3XvilH5XNQfgAC3QMAAkaX4FQje_--aXA31yIE'
+            'video' => 	$video_one_file_id
         ];
 
         $result = Request::sendVideo($data);

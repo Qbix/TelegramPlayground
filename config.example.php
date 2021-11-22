@@ -31,6 +31,7 @@ return [
     'group_chat_id' => -1001529587886,
     'deep_link_code' => '12345678', // string
     'game_short_name' => 'game_short_name',
+    'video_one_file_id' => 'BAACAgUAAxkBAAEO..............................',
 
     // [Manager Only] Secret key required to access the webhook
     'secret'       => 'super_secret',
