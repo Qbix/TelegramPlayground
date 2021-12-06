@@ -79,6 +79,7 @@ class GenericmessageCommand extends SystemCommand
         $chat_id = $message->getChat()->getId();   // Get the current Chat ID
         $user_id = $message->getFrom()->getId();
 
+        /*
         $newChatMemeber = $message->getNewChatMembers();
 
         if ($newChatMemeber) {
@@ -130,7 +131,7 @@ class GenericmessageCommand extends SystemCommand
             if ($result->isOk()) {
                 return $result;
             }
-        } else {
+        } else { */
             // If a conversation is busy, execute the conversation command after handling the message.
             $conversation = new Conversation($user_id, $chat_id);
 
@@ -138,7 +139,7 @@ class GenericmessageCommand extends SystemCommand
             if ($conversation->exists() && $command = $conversation->getCommand()) {
                 return $this->telegram->executeCommand($command);
             }
-        }
+        /*} */
 
         return Request::emptyResponse();
 
