@@ -62,6 +62,16 @@ class StartCommand extends SystemCommand
      */
     public function execute(): ServerResponse
     {
+
+        $locale = "es_ES";
+
+        putenv("LANG=" . $locale);
+        setlocale(LC_ALL, $locale);
+        $domain = "messages";
+        bindtextdomain($domain, __DIR__."/locales");  // Also works like this
+        bind_textdomain_codeset($domain, 'UTF-8');
+        textdomain($domain);
+
         $config = require __DIR__ . '/../../config.php';
         $deep_link_code = $config['deep_link_code'];
 
@@ -99,7 +109,8 @@ class StartCommand extends SystemCommand
             return $this->telegram->executeCommand("survey");
         } else {
             return $this->replyToChat(
-                'Hi there!' . PHP_EOL .
+//                'Hi there!' . PHP_EOL .
+                _('Hello and welcome!') . PHP_EOL .
                 'Type /help to see all commands!'
             );
         }
