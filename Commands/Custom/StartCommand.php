@@ -108,9 +108,8 @@ class StartCommand extends SystemCommand
             return $this->telegram->executeCommand("survey");
         } else {
             return $this->replyToChat(
-//                'Hi there!' . PHP_EOL .
-                __('Hello and welcome!') . PHP_EOL .
-                'Type /help to see all commands!'
+                __('Hi there!') . PHP_EOL .
+                __('Type /help to see all commands!')
             );
         }
 
