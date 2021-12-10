@@ -22,7 +22,8 @@
         "monolog/monolog": "^2.3",
         "ext-json": "^1.7",
         "ext-curl": "^7.3",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "phpmyadmin/motranslator": "^5.2"
     },
     "require-dev": {
         "php-parallel-lint/php-parallel-lint": "^1.2",
