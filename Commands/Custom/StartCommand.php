@@ -26,6 +26,7 @@ use Longman\TelegramBot\Commands\SystemCommand;
 use Longman\TelegramBot\Entities\ServerResponse;
 use Longman\TelegramBot\Exception\TelegramException;
 use Longman\TelegramBot\Request;
+use PhpMyAdmin\MoTranslator\Loader;
 
 class StartCommand extends SystemCommand
 {
@@ -63,14 +64,15 @@ class StartCommand extends SystemCommand
     public function execute(): ServerResponse
     {
 
+        Loader::loadFunctions();
+
         $locale = "es_ES";
 
-        putenv("LANG=" . $locale);
-        setlocale(LC_ALL, $locale);
+        _setlocale(LC_ALL, $locale);
         $domain = "messages";
-        bindtextdomain($domain, __DIR__."/locales");  // Also works like this
-        bind_textdomain_codeset($domain, 'UTF-8');
-        textdomain($domain);
+        _bindtextdomain($domain, __DIR__."/locales");  // Also works like this
+        _bind_textdomain_codeset($domain, 'UTF-8');
+        _textdomain($domain);
 
         $config = require __DIR__ . '/../../config.php';
         $deep_link_code = $config['deep_link_code'];
@@ -110,7 +112,7 @@ class StartCommand extends SystemCommand
         } else {
             return $this->replyToChat(
 //                'Hi there!' . PHP_EOL .
-                _('Hello and welcome!') . PHP_EOL .
+                __('Hello and welcome!') . PHP_EOL .
                 'Type /help to see all commands!'
             );
         }
