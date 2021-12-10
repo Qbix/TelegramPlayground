@@ -23,6 +23,7 @@
         "ext-json": "^1.7",
         "ext-curl": "^7.3",
         "ext-pdo": "*",
+        "ext-gettext": "*",
         "phpmyadmin/motranslator": "^5.2"
     },
     "require-dev": {
