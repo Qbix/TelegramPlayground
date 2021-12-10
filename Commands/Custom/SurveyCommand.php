@@ -18,6 +18,7 @@
 
 namespace Longman\TelegramBot\Commands\UserCommands;
 
+use App;
 use Longman\TelegramBot\Commands\UserCommand;
 use Longman\TelegramBot\Conversation;
 use Longman\TelegramBot\Entities\ChatPermissions;
@@ -28,6 +29,8 @@ use Longman\TelegramBot\Entities\KeyboardButton;
 use Longman\TelegramBot\Entities\ServerResponse;
 use Longman\TelegramBot\Exception\TelegramException;
 use Longman\TelegramBot\Request;
+
+require_once 'I18n.php';
 
 class SurveyCommand extends UserCommand
 {
@@ -77,6 +80,10 @@ class SurveyCommand extends UserCommand
     public function execute(): ServerResponse
     {
 
+        $i18n = new App\I18n();
+
+        $i18n->handleMultiLanguage();
+
         $config = require __DIR__ . '/../../config.php';
         $group_link = $config['group_link'];
         $group_chat_id = $config['group_chat_id'];
@@ -122,13 +129,13 @@ class SurveyCommand extends UserCommand
                     $this->conversation->update();
 
                     $data['reply_markup'] = (new Keyboard(
-                        (new KeyboardButton('Share Location'))->setRequestLocation(true)
+                        (new KeyboardButton(__('Share Location')))->setRequestLocation(true)
                     ))
                         ->setOneTimeKeyboard(true)
                         ->setResizeKeyboard(true)
                         ->setSelective(true);
 
-                    $data['text'] = 'Share your location:';
+                    $data['text'] = __('Share your location:');
 
                     $result = Request::sendMessage($data);
                     break;
@@ -146,13 +153,13 @@ class SurveyCommand extends UserCommand
                     $this->conversation->update();
 
                     $data['reply_markup'] = (new Keyboard(
-                        (new KeyboardButton('Share Contact'))->setRequestContact(true)
+                        (new KeyboardButton(__('Share Contact')))->setRequestContact(true)
                     ))
                         ->setOneTimeKeyboard(true)
                         ->setResizeKeyboard(true)
                         ->setSelective(true);
 
-                    $data['text'] = 'Share your contact information:';
+                    $data['text'] = __('Share your contact information:');
 
                     $result = Request::sendMessage($data);
                     break;
@@ -169,7 +176,7 @@ class SurveyCommand extends UserCommand
             // No break!
             case 2:
                 $this->conversation->update();
-                $out_text = '/Survey result:' . PHP_EOL;
+                $out_text = __('/Survey result:') . PHP_EOL;
                 $longitude = $notes['longitude'];
                 unset($notes['state']);
                 foreach ($notes as $k => $v) {
@@ -201,10 +208,10 @@ class SurveyCommand extends UserCommand
 
                     $result = Request::sendMessage([
                         'chat_id' => $chat_id,
-                        'text' => 'Thanks for providing the info. You can participate in the group chat. Please click below button', // change this game short name to as per your game short name
+                        'text' => __('Thanks for providing the info. You can participate in the group chat. Please click below button'), // change this game short name to as per your game short name
                         'reply_markup' => new InlineKeyboard([
                             new InlineKeyboardButton([
-                                'text' => "open group",
+                                'text' => __("open group"),
                                 'url' => $group_link
                             ])
                         ]),

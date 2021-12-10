@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-10 23:09+0530\n"
-"PO-Revision-Date: 2021-12-10 23:09+0530\n"
+"POT-Creation-Date: 2021-12-10 23:21+0530\n"
+"PO-Revision-Date: 2021-12-10 23:21+0530\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -14,6 +14,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: StartCommand.php\n"
+"X-Poedit-SearchPath-1: SurveyCommand.php\n"
 
 #: StartCommand.php:111
 msgid "Hi there!"
@@ -22,6 +23,38 @@ msgstr "¡Hola!"
 #: StartCommand.php:112
 msgid "Type /help to see all commands!"
 msgstr "Escribe /help  para ver todos los comandos."
+
+#: SurveyCommand.php:132
+msgid "Share Location"
+msgstr "Comparte ubicacion"
+
+#: SurveyCommand.php:138
+msgid "Share your location:"
+msgstr "Comparte tu ubicación:"
+
+#: SurveyCommand.php:156
+msgid "Share Contact"
+msgstr "Compartir contacto"
+
+#: SurveyCommand.php:162
+msgid "Share your contact information:"
+msgstr "Comparta su información de contacto:"
+
+#: SurveyCommand.php:179
+msgid "/Survey result:"
+msgstr "/Survey de la encuesta:"
+
+#: SurveyCommand.php:211
+msgid ""
+"Thanks for providing the info. You can participate in the group chat. Please "
+"click below button"
+msgstr ""
+"Gracias por proporcionar la información. Puedes participar en el chat "
+"grupal. Haga clic en el botón de abajo"
+
+#: SurveyCommand.php:214
+msgid "open group"
+msgstr "grupo abierto"
 
 #~ msgid "Example"
 #~ msgstr "Ejemplo"
