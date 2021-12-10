@@ -2,6 +2,7 @@
 
 namespace Longman\TelegramBot\Commands\UserCommands;
 
+use App;
 use Longman\TelegramBot\Commands\UserCommand;
 use Longman\TelegramBot\Entities\ServerResponse;
 use Longman\TelegramBot\Exception\TelegramException;
@@ -10,6 +11,8 @@ use Longman\TelegramBot\Request;
 
 use Longman\TelegramBot\Conversation;
 use Longman\TelegramBot\Entities\Keyboard;
+
+require_once 'I18n.php';
 
 class UserinfoCommand extends UserCommand
 {
@@ -57,6 +60,10 @@ class UserinfoCommand extends UserCommand
      */
     public function execute(): ServerResponse
     {
+        $i18n = new App\I18n();
+
+        $i18n->handleMultiLanguage();
+
         $message = $this->getMessage();
         $from       = $message->getFrom();
         $chat = $message->getChat();
@@ -72,14 +79,14 @@ class UserinfoCommand extends UserCommand
         // Make sure the Download path has been defined and exists
         $download_path = $this->telegram->getDownloadPath();
         if (!is_dir($download_path)) {
-            return $this->replyToChat('Download path has not been defined or does not exist.');
+            return $this->replyToChat(__('Download path has not been defined or does not exist.'));
         }
         $message_type = $message->getType();
 
         $caption = sprintf(
-            'Your Id: %d' . PHP_EOL .
-            'Name: %s %s' . PHP_EOL .
-            'Username: %s',
+            __('Your Id:')." %d" . PHP_EOL .
+            __('Name:')." %s %s" . PHP_EOL .
+            __('Username:')." %s",
             $user_id,
             $from->getFirstName(),
             $from->getLastName(),
@@ -113,9 +120,9 @@ class UserinfoCommand extends UserCommand
 
                 $file    = Request::getFile(['file_id' => $file_id]);
                 if ($file->isOk() && Request::downloadFile($file->getResult())) {
-                    $data['text'] = $message_type . ' file is located at: ' . $download_path . '/' . $file->getResult()->getFilePath();
+                    $data['text'] = $message_type . __(' file is located at: ') . $download_path . '/' . $file->getResult()->getFilePath();
                 } else {
-                    $data['text'] = 'Failed to download.';
+                    $data['text'] = __('Failed to download.');
                 }
 
                 return Request::sendPhoto($data);
