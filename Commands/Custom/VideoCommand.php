@@ -2,6 +2,7 @@
 
 namespace Longman\TelegramBot\Commands\UserCommands;
 
+use App;
 use Longman\TelegramBot\Commands\UserCommand;
 use Longman\TelegramBot\Entities\ServerResponse;
 use Longman\TelegramBot\Exception\TelegramException;
@@ -10,6 +11,7 @@ use Longman\TelegramBot\Request;
 
 use Longman\TelegramBot\Conversation;
 
+require_once 'I18n.php';
 
 class VideoCommand extends UserCommand
 {
@@ -57,6 +59,10 @@ class VideoCommand extends UserCommand
      */
     public function execute(): ServerResponse
     {
+        $i18n = new App\I18n();
+
+        $i18n->handleMultiLanguage();
+
         $config = require __DIR__ . '/../../config.php';
         $video_one_file_id = $config['video_one_file_id'];
 
