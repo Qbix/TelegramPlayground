@@ -22,11 +22,13 @@
 
 namespace Longman\TelegramBot\Commands\SystemCommands;
 
+use App;
 use Longman\TelegramBot\Commands\SystemCommand;
 use Longman\TelegramBot\Entities\ServerResponse;
 use Longman\TelegramBot\Exception\TelegramException;
 use Longman\TelegramBot\Request;
-use PhpMyAdmin\MoTranslator\Loader;
+
+require_once 'I18n.php';
 
 class StartCommand extends SystemCommand
 {
@@ -64,15 +66,10 @@ class StartCommand extends SystemCommand
     public function execute(): ServerResponse
     {
 
-        Loader::loadFunctions();
+        $i18n = new App\I18n();
 
-        $locale = "es_ES";
+        $i18n->handleMultiLanguage();
 
-        _setlocale(LC_ALL, $locale);
-        $domain = "messages";
-        _bindtextdomain($domain, __DIR__."/locales");  // Also works like this
-        _bind_textdomain_codeset($domain, 'UTF-8');
-        _textdomain($domain);
 
         $config = require __DIR__ . '/../../config.php';
         $deep_link_code = $config['deep_link_code'];
