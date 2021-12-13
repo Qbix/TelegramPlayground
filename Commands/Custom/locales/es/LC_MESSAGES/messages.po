@@ -19,6 +19,7 @@ msgstr ""
 "X-Poedit-SearchPath-3: VideoCommand.php\n"
 "X-Poedit-SearchPath-4: CancelCommand.php\n"
 "X-Poedit-SearchPath-5: GenericmessageCommand.php\n"
+"X-Poedit-SearchPath-6: CallbackqueryCommand.php\n"
 
 #: CancelCommand.php:74
 msgid "Nothing to cancel."

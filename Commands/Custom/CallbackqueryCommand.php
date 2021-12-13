@@ -20,8 +20,12 @@
  */
 
 namespace Longman\TelegramBot\Commands\SystemCommands;
+
+use App;
 use Longman\TelegramBot\Commands\SystemCommand;
 use Longman\TelegramBot\Entities\ServerResponse;
+
+require_once 'I18n.php';
 
 class CallbackqueryCommand extends SystemCommand
 {
@@ -48,6 +52,9 @@ class CallbackqueryCommand extends SystemCommand
      */
     public function execute(): ServerResponse
     {
+        $i18n = new App\I18n();
+        $i18n->handleMultiLanguage();
+
         // Callback query data can be fetched and handled accordingly.
         $callback_query = $this->getCallbackQuery();
         $callback_data = $callback_query->getData();
