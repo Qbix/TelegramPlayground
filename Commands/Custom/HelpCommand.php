@@ -101,7 +101,7 @@ class HelpCommand extends UserCommand
             ), ['parse_mode' => 'markdown']);
         }
 
-        return $this->replyToChat(__('No help available: Command') . ' `/' . $command_str . __('not found') . ' ' . '` ', ['parse_mode' => 'markdown']);
+        return $this->replyToChat(__('No help available: Command') . ' `/' . $command_str . ' ' . __('not found') . ' ' . '` ', ['parse_mode' => 'markdown']);
     }
 
     /**
