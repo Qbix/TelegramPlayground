@@ -18,8 +18,11 @@
 
 namespace Longman\TelegramBot\Commands\SystemCommands;
 
+use App;
 use Longman\TelegramBot\Commands\SystemCommand;
 use Longman\TelegramBot\Entities\ServerResponse;
+
+require_once 'I18n.php';
 
 class ChoseninlineresultCommand extends SystemCommand
 {
@@ -45,6 +48,9 @@ class ChoseninlineresultCommand extends SystemCommand
      */
     public function execute(): ServerResponse
     {
+        $i18n = new App\I18n();
+        $i18n->handleMultiLanguage();
+
         // Information about the chosen result is returned.
         $inline_query = $this->getChosenInlineResult();
         $query        = $inline_query->getQuery();
