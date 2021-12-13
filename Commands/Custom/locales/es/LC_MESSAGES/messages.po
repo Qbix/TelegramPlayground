@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-13 17:03+0530\n"
-"PO-Revision-Date: 2021-12-13 17:08+0530\n"
+"POT-Creation-Date: 2021-12-13 18:03+0530\n"
+"PO-Revision-Date: 2021-12-13 18:05+0530\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -22,6 +22,7 @@ msgstr ""
 "X-Poedit-SearchPath-6: CallbackqueryCommand.php\n"
 "X-Poedit-SearchPath-7: ChoseninlineresultCommand.php\n"
 "X-Poedit-SearchPath-8: InlinequeryCommand.php\n"
+"X-Poedit-SearchPath-9: HelpCommand.php\n"
 
 #: CancelCommand.php:68
 msgid "Nothing to cancel."
@@ -38,6 +39,38 @@ msgstr "Conversacion"
 #: CancelCommand.php:111
 msgid "cancelled!"
 msgstr "¡cancelada!"
+
+#: HelpCommand.php:72
+msgid "Commands List"
+msgstr "Lista de comandos"
+
+#: HelpCommand.php:78
+msgid "Admin Commands List"
+msgstr "Lista de comandos de administrador"
+
+#: HelpCommand.php:84
+msgid "For exact command help type"
+msgstr "Para el tipo de ayuda de comando exacto"
+
+#: HelpCommand.php:94
+msgid "Command"
+msgstr "Mando"
+
+#: HelpCommand.php:95
+msgid "Description"
+msgstr "Descripción"
+
+#: HelpCommand.php:96
+msgid "Usage"
+msgstr "Usage"
+
+#: HelpCommand.php:104
+msgid "No help available: Command"
+msgstr "No hay ayuda disponible: comando"
+
+#: HelpCommand.php:104
+msgid "not found"
+msgstr "extraviado"
 
 #: InlinequeryCommand.php:77
 msgid "Simple text using InputTextMessageContent"

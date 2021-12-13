@@ -18,10 +18,13 @@
 
 namespace Longman\TelegramBot\Commands\UserCommands;
 
+use App;
 use Longman\TelegramBot\Commands\Command;
 use Longman\TelegramBot\Commands\UserCommand;
 use Longman\TelegramBot\Entities\ServerResponse;
 use Longman\TelegramBot\Exception\TelegramException;
+
+require_once 'I18n.php';
 
 class HelpCommand extends UserCommand
 {
@@ -53,7 +56,10 @@ class HelpCommand extends UserCommand
      */
     public function execute(): ServerResponse
     {
-        $message     = $this->getMessage();
+        $i18n = new App\I18n();
+        $i18n->handleMultiLanguage();
+
+        $message = $this->getMessage();
         $command_str = trim($message->getText(true));
 
         // Admin commands shouldn't be shown in group chats
@@ -63,19 +69,19 @@ class HelpCommand extends UserCommand
 
         // If no command parameter is passed, show the list.
         if ($command_str === '') {
-            $text = '*Commands List*:' . PHP_EOL;
+            $text = '*' . __('Commands List') . '*:' . PHP_EOL;
             foreach ($user_commands as $user_command) {
                 $text .= '/' . $user_command->getName() . ' - ' . $user_command->getDescription() . PHP_EOL;
             }
 
             if ($safe_to_show && count($admin_commands) > 0) {
-                $text .= PHP_EOL . '*Admin Commands List*:' . PHP_EOL;
+                $text .= PHP_EOL . '*' . __('Admin Commands List') . '*:' . PHP_EOL;
                 foreach ($admin_commands as $admin_command) {
                     $text .= '/' . $admin_command->getName() . ' - ' . $admin_command->getDescription() . PHP_EOL;
                 }
             }
 
-            $text .= PHP_EOL . 'For exact command help type: /help <command>';
+            $text .= PHP_EOL . __('For exact command help type') . ': /help <command>';
 
             return $this->replyToChat($text, ['parse_mode' => 'markdown']);
         }
@@ -85,9 +91,9 @@ class HelpCommand extends UserCommand
             $command = $all_commands[$command_str];
 
             return $this->replyToChat(sprintf(
-                'Command: %s (v%s)' . PHP_EOL .
-                'Description: %s' . PHP_EOL .
-                'Usage: %s',
+                __('Command') . ': %s (v%s)' . PHP_EOL .
+                __('Description') . ': %s' . PHP_EOL .
+                __('Usage') . ': %s',
                 $command->getName(),
                 $command->getVersion(),
                 $command->getDescription(),
@@ -95,7 +101,7 @@ class HelpCommand extends UserCommand
             ), ['parse_mode' => 'markdown']);
         }
 
-        return $this->replyToChat('No help available: Command `/' . $command_str . '` not found', ['parse_mode' => 'markdown']);
+        return $this->replyToChat(__('No help available: Command') . ' `/' . $command_str . __('not found') . ' ' . '` ', ['parse_mode' => 'markdown']);
     }
 
     /**
