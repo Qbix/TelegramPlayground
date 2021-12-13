@@ -2,12 +2,15 @@
 
 namespace Longman\TelegramBot\Commands\UserCommands;
 
+use App;
 use Longman\TelegramBot\Commands\UserCommand;
 use Longman\TelegramBot\Entities\InlineKeyboard;
 use Longman\TelegramBot\Entities\InlineKeyboardButton;
 use Longman\TelegramBot\Entities\ServerResponse;
 use Longman\TelegramBot\Exception\TelegramException;
 use Longman\TelegramBot\Request;
+
+require_once 'I18n.php';
 
 class HtmlGameCommand extends UserCommand
 {
@@ -38,6 +41,9 @@ class HtmlGameCommand extends UserCommand
      */
     public function execute(): ServerResponse
     {
+        $i18n = new App\I18n();
+        $i18n->handleMultiLanguage();
+
         $config = require __DIR__ . '/../../config.php';
         $htmlgame_short_name = $config['game_short_name'];
 
@@ -50,7 +56,7 @@ class HtmlGameCommand extends UserCommand
             'game_short_name' => $htmlgame_short_name, // change this game short name to as per your game short name
             'reply_markup' => new InlineKeyboard([
                 new InlineKeyboardButton([
-                    'text'=>"Play",
+                    'text'=> __('Play'),
                     'callback_game'=> 'Play qbix bot game'
                 ])
             ]),
