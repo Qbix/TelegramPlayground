@@ -18,6 +18,7 @@
 
 namespace Longman\TelegramBot\Commands\SystemCommands;
 
+use App;
 use Longman\TelegramBot\Commands\SystemCommand;
 use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultArticle;
 use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultContact;
@@ -30,6 +31,8 @@ use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultVenue;
 use Longman\TelegramBot\Entities\InlineQuery\InlineQueryResultVideo;
 use Longman\TelegramBot\Entities\InputMessageContent\InputTextMessageContent;
 use Longman\TelegramBot\Entities\ServerResponse;
+
+require_once 'I18n.php';
 
 class InlinequeryCommand extends SystemCommand
 {
@@ -56,6 +59,9 @@ class InlinequeryCommand extends SystemCommand
     public function execute(): ServerResponse
     {
 
+        $i18n = new App\I18n();
+        $i18n->handleMultiLanguage();
+
         $config = require __DIR__ . '/../../config.php';
         $htmlgame_short_name = $config['game_short_name'];
 
@@ -68,13 +74,13 @@ class InlinequeryCommand extends SystemCommand
             // https://core.telegram.org/bots/api#inlinequeryresultarticle
             $results[] = new InlineQueryResultArticle([
                 'id'                    => '001',
-                'title'                 => 'Simple text using InputTextMessageContent',
-                'description'           => 'this will return Text',
+                'title'                 => __('Simple text using InputTextMessageContent'),
+                'description'           => __('this will return Text'),
 
                 // Here you can put any other Input...MessageContent you like.
                 // It will keep the style of an article, but post the specific message type back to the user.
                 'input_message_content' => new InputTextMessageContent([
-                    'message_text' => 'The query that got you here: ' . $query,
+                    'message_text' => __('The query that got you here:') . ' ' . $query,
                 ]),
             ]);
 
@@ -82,14 +88,14 @@ class InlinequeryCommand extends SystemCommand
             $results[] = new InlineQueryResultContact([
                 'id'           => '002',
                 'phone_number' => '12345678',
-                'first_name'   => 'Best',
-                'last_name'    => 'Friend',
+                'first_name'   => __('Best'),
+                'last_name'    => __('Friend'),
             ]);
 
             // https://core.telegram.org/bots/api#inlinequeryresultlocation
             $results[] = new InlineQueryResultLocation([
                 'id'        => '003',
-                'title'     => 'The center of the world!',
+                'title'     => __('The center of the world!'),
                 'latitude'  => 40.866667,
                 'longitude' => 34.566667,
             ]);
@@ -97,8 +103,8 @@ class InlinequeryCommand extends SystemCommand
             // https://core.telegram.org/bots/api#inlinequeryresultvenue
             $results[] = new InlineQueryResultVenue([
                 'id'        => '004',
-                'title'     => 'No-Mans-Land',
-                'address'   => 'In the middle of Nowhere',
+                'title'     => __('No-Mans-Land'),
+                'address'   => __('In the middle of Nowhere'),
                 'latitude'  => 33,
                 'longitude' => -33,
             ]);
@@ -115,8 +121,8 @@ class InlinequeryCommand extends SystemCommand
                 'type'   => 'gif',
                 'gif_url' => 'https://sample-videos.com/gif/3.gif',
                 'thumb_url' => 'https://sample-videos.com/gif/3.gif',
-                'title' => 'This is a gif',
-                'caption' => 'This is a gif caption',
+                'title' => __('This is a gif'),
+                'caption' => __('This is a gif caption'),
                 'gif_height' => 10
             ]);
 
@@ -126,8 +132,8 @@ class InlinequeryCommand extends SystemCommand
                 'type'   => 'mpeg4_gif',
                 'mpeg4_url' => 'https://www.easygifanimator.net/images/samples/video-to-gif-sample.gif',
                 'thumb_url' => 'https://www.easygifanimator.net/images/samples/video-to-gif-sample.gif',
-                'title' => 'This is a animated gif',
-                'caption' => 'This is a animated gif caption'
+                'title' => __('This is a animated gif'),
+                'caption' => __('This is a animated gif caption')
             ]);
 
             // https://core.telegram.org/bots/api#inlinequeryresultphoto
@@ -136,8 +142,8 @@ class InlinequeryCommand extends SystemCommand
                 'type'   => 'photo',
                 'photo_url' => 'https://file-examples-com.github.io/uploads/2017/10/file_example_JPG_100kB.jpg',
                 'thumb_url' => 'https://file-examples-com.github.io/uploads/2017/10/file_example_JPG_100kB.jpg',
-                'title' => 'This is a photo',
-                'caption' => 'This is a photo caption'
+                'title' => __('This is a photo'),
+                'caption' => __('This is a photo caption')
             ]);
 
             // https://core.telegram.org/bots/api#inlinequeryresultvideo
@@ -147,8 +153,8 @@ class InlinequeryCommand extends SystemCommand
                 'video_url' => 'https://filesamples.com/samples/video/mp4/sample_640x360.mp4',
                 'mime_type' => 'video/mp4',
                 'thumb_url' => 'https://www.learningcontainer.com/wp-content/uploads/2020/07/Sample-JPEG-Image-File-Download-scaled.jpg',
-                'title' => 'This is a video',
-                'caption' => 'This is a video caption'
+                'title' => __('This is a video'),
+                'caption' => __('This is a video caption')
             ]);
 
 
