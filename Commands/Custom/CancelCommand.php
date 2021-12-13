@@ -21,11 +21,14 @@
 
 namespace Longman\TelegramBot\Commands\UserCommands;
 
+use App;
 use Longman\TelegramBot\Commands\UserCommand;
 use Longman\TelegramBot\Conversation;
 use Longman\TelegramBot\Entities\Keyboard;
 use Longman\TelegramBot\Entities\ServerResponse;
 use Longman\TelegramBot\Exception\TelegramException;
+
+require_once 'I18n.php';
 
 class CancelCommand extends UserCommand
 {
@@ -61,31 +64,14 @@ class CancelCommand extends UserCommand
      */
     public function executeNoDb(): ServerResponse
     {
-        return $this->removeKeyboard('Nothing to cancel.');
+        $this->multiLang();
+        return $this->removeKeyboard(__('Nothing to cancel.'));
     }
 
-    /**
-     * Main command execution
-     *
-     * @return ServerResponse
-     * @throws TelegramException
-     */
-    public function execute(): ServerResponse
+    public function multiLang()
     {
-        $text = 'No active conversation!';
-
-        // Cancel current conversation if any
-        $conversation = new Conversation(
-            $this->getMessage()->getFrom()->getId(),
-            $this->getMessage()->getChat()->getId()
-        );
-
-        if ($conversation_command = $conversation->getCommand()) {
-            $conversation->cancel();
-            $text = 'Conversation "' . $conversation_command . '" cancelled!';
-        }
-
-        return $this->removeKeyboard($text);
+        $i18n = new App\I18n();
+        $i18n->handleMultiLanguage();
     }
 
     /**
@@ -101,5 +87,30 @@ class CancelCommand extends UserCommand
         return $this->replyToChat($text, [
             'reply_markup' => Keyboard::remove(['selective' => true]),
         ]);
+    }
+
+    /**
+     * Main command execution
+     *
+     * @return ServerResponse
+     * @throws TelegramException
+     */
+    public function execute(): ServerResponse
+    {
+        $this->multiLang();
+        $text = __('No active conversation!');
+
+        // Cancel current conversation if any
+        $conversation = new Conversation(
+            $this->getMessage()->getFrom()->getId(),
+            $this->getMessage()->getChat()->getId()
+        );
+
+        if ($conversation_command = $conversation->getCommand()) {
+            $conversation->cancel();
+            $text = __('Conversation') . ' ' . $conversation_command . ' ' . __('cancelled!');
+        }
+
+        return $this->removeKeyboard($text);
     }
 }
