@@ -11,7 +11,8 @@ class I18n
     {
         Loader::loadFunctions();
 
-        $locale = "es_ES";
+//        $locale = "es_ES";
+        $locale = "en_US";
 
         _setlocale(LC_ALL, $locale);
         $domain = "messages";
