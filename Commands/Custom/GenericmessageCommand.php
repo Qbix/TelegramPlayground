@@ -20,6 +20,7 @@
 
 namespace Longman\TelegramBot\Commands\SystemCommands;
 
+use App;
 use Longman\TelegramBot\DB;
 use Longman\TelegramBot\Commands\SystemCommand;
 use Longman\TelegramBot\Conversation;
@@ -29,6 +30,8 @@ use Longman\TelegramBot\Entities\InlineKeyboardButton;
 use Longman\TelegramBot\Entities\ServerResponse;
 use Longman\TelegramBot\Exception\TelegramException;
 use Longman\TelegramBot\Request;
+
+require_once 'I18n.php';
 
 class GenericmessageCommand extends SystemCommand
 {
@@ -71,6 +74,9 @@ class GenericmessageCommand extends SystemCommand
      */
     public function execute(): ServerResponse
     {
+        $i18n = new App\I18n();
+        $i18n->handleMultiLanguage();
+
         $config = require __DIR__ . '/../../config.php';
         $bot_username = $config['bot_username'];
         $deep_link_code = $config['deep_link_code'];
