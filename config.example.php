@@ -32,6 +32,7 @@ return [
     'deep_link_code' => '12345678', // string
     'game_short_name' => 'game_short_name',
     'video_one_file_id' => 'BAACAgUAAxkBAAEO..............................',
+    'domain_url'   => 'http://local.myweb.com', // without forward slash('/') at the end
 
     // [Manager Only] Secret key required to access the webhook
     'secret'       => 'super_secret',
