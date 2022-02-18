@@ -15,6 +15,10 @@
  *
  * For the full list of options, go to:
  * https://github.com/php-telegram-bot/telegram-bot-manager#set-extra-bot-parameters
+ *
+ * tail -f php-telegram-bot-debug.log
+ * tail -f /var/log/apache2/local.php-telegram-bot-core.com-error.log
+ * cat php-telegram-bot-debug.log
  */
 
 // Load composer
